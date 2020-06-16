@@ -3,10 +3,10 @@
 #NOTES: this script must be run by non-root user with passwordless sudo access
 
 # ado_url='https://dev.azure.com/chef-sa'
-ado_url='' #TODO
-ado_token='' #TODO
-azp_pool='default' #TODO
-azp_agent_name='test' #TODO
+ado_url='' #https://dev.azure.com/<your_org>
+ado_token='' #your PAT token
+azp_pool='default' #azure devops agent pool
+azp_agent_name='test' #give your agent a name
 agent_version=$(curl -s https://github.com/microsoft/azure-pipelines-agent/releases | grep '<td>Linux x64</td>' -A1 | head -2 | cut -d '/' -f5 | tail -1)
 
 #Download and install agent + dependencies
@@ -23,7 +23,10 @@ sudo ./bin/installdependencies.sh
     --pool $azp_pool \
     --agent $azp_agent_name \
     --replace \
-    --acceptTeeEula
+    --acceptTeeEula \
+    --proxyurl $PROXY_URL \
+    --proxyusername $PROXY_USER \
+    --proxypassword $PROXY_PASS
 
 #Run the agent as a service
 sudo ./svc.sh install

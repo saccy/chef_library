@@ -6,7 +6,7 @@ set -e
 #TODO: cmd line args.
 #      flag to force automatic rectify of preflight check errors and install
 
-public_dns_automate="$1"
+fqdn="$1"
 
 curl https://packages.chef.io/files/current/latest/chef-automate-cli/chef-automate_linux_amd64.zip \
     | gunzip - > chef-automate && chmod +x chef-automate
@@ -14,7 +14,7 @@ curl https://packages.chef.io/files/current/latest/chef-automate-cli/chef-automa
 #Initialise chef automate config file
 # sudo ./chef-automate init-config \
 ./chef-automate init-config \
-    --fqdn $public_dns_automate #\
+    --fqdn $fqdn #\
     #--certificate $cert \
     #--private-key $path_to_key
 
