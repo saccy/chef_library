@@ -1,6 +1,9 @@
 #!/bin/bash
 
-#NOTES: this script must be run by non-root user with passwordless sudo access
+#NOTES: this script is not in a usable state atm
+#       this script must be run by non-root user with passwordless sudo access
+
+#TODO: refactor to look for proxy env vars.
 
 ado_url='' #https://dev.azure.com/<your_org>
 ado_token='' #your PAT token
