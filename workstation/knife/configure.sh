@@ -24,7 +24,5 @@ knife configure \
     # --repository '' \
     # --yes \
 
-rm -f $config_file
-
 knife ssl fetch
 knife ssl check
