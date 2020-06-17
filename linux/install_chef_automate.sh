@@ -8,8 +8,8 @@ set -e
 
 fqdn="$1"
 
-curl https://packages.chef.io/files/current/latest/chef-automate-cli/chef-automate_linux_amd64.zip \
-    | gunzip - > chef-automate && chmod +x chef-automate
+curl https://packages.chef.io/files/current/latest/chef-automate-cli/chef-automate_linux_amd64.zip | \
+    gunzip - > chef-automate && chmod +x chef-automate
 
 #Initialise chef automate config file
 # sudo ./chef-automate init-config \
