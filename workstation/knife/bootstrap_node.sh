@@ -2,6 +2,8 @@
 
 #https://docs.chef.io/workstation/knife_bootstrap/
 
+#TODO: include password option for authentication
+
 set -e
 
 node='' #DNS resolvable name of the node to target
@@ -14,4 +16,5 @@ knife bootstrap $node \
     --ssh-identity-file $node_ssh_key \
     --node-name $node_name \
     --chef-license=accept \
-    --ssh-verify-host-key=never
+    --ssh-verify-host-key=never \
+    --sudo
