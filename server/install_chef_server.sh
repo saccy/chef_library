@@ -26,12 +26,18 @@ case $os in
     'centos')
         #https://downloads.chef.io/chef-server/${server_vers}#el  << use this to get the '${server_vers}-x' suffix
         pkg_suffix="${server_vers}/el/${os_v}/chef-server-core-${server_vers}-1.el7.x86_64.rpm"
-        install_cmd='yum localinstall -y'
+        pkg_url=${pkg_prefix}/${pkg_suffix}
+        pkg=${pkg_url##*/}
+        curl $pkg_url -o /tmp/${pkg}
+        yum localinstall -y /tmp/${pkg}
         ;;
     'ubuntu')
         #"https://downloads.chef.io/chef-server/${server_vers}#ubuntu" << use this to get the '${server_vers}-x' suffix
         pkg_suffix="${server_vers}/ubuntu/${os_v}/chef-server-core_${server_vers}-1_amd64.deb"
-        install_cmd='dpkg -i'
+        pkg_url=${pkg_prefix}/${pkg_suffix}
+        pkg=${pkg_url##*/}
+        curl $pkg_url -o /tmp/${pkg}
+        dpkg -i /tmp/${pkg}
         ;;
     *)
         echo "OS not supported in this environment: $os"
@@ -39,27 +45,26 @@ case $os in
         ;;
 esac
 
-pkg_url=${pkg_prefix}/${pkg_suffix}
-pkg=${pkg_url##*/}
-
-#Main
-curl $pkg_url -o /tmp/${pkg} #Download chef server package
-
-exec $install_cmd /tmp/${pkg} #Install chef server - seems to break after this
-
 #Configure chef server
 echo 'Accepting chef license'
 chef-server-ctl \
     reconfigure \
-    --chef-license=accept
+        --chef-license=accept
 
-echo 'Creatning chef server admin user'
+echo 'Creating chef server admin user'
 chef-server-ctl \
-    user-create $user_name $user_first $user_last $user_email $user_pass \
-    --filename $ssh_key
+    user-create \
+        $user_name \
+        $user_first \
+        $user_last \
+        $user_email \
+        $user_pass \
+        --filename $user_key
 
-echo 'Creatning chef server organisation'
+echo 'Creating chef server organisation'
 chef-server-ctl \
-    org-create ${org_machine_friendly} "$org" \
-    --association_user $user_name \
-    --filename $org_key
+    org-create \
+        ${org_machine_friendly} \
+        "$org" \
+        --association_user $user_name \
+        --filename $org_key

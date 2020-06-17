@@ -14,18 +14,53 @@ tar xvzf vsts-agent-linux-x64-${agent_version}.tar.gz
 sudo ./bin/installdependencies.sh
 
 #Configure the agent
-./config.sh \
-    --unattended \
-    --url $ado_url \
-    --auth pat \
-    --token $ado_token \
-    --pool $azp_pool \
-    --agent $azp_agent_name \
-    --replace \
-    --acceptTeeEula \
-    --proxyurl $PROXY_URL \
-    --proxyusername $PROXY_USER \
-    --proxypassword $PROXY_PASS
+if [[ -n $PROXY_URL && -n $PROXY_USER && -n $PROXY_PASS ]]; then
+    echo "Connecting to ADO server: $AZP_URL
+agent pool: $AZP_POOL
+agent name: $AZP_AGENT_NAME
+proxy url: $PROXY_URL
+proxy user: $PROXY_USER"
+    ./config.sh \
+        --unattended \
+        --url $AZP_URL \
+        --auth pat \
+        --token $AZP_TOKEN \
+        --pool $AZP_POOL \
+        --agent $AZP_AGENT_NAME \
+        --replace \
+        --acceptTeeEula \
+        --proxyurl $PROXY_URL \
+        --proxyusername $PROXY_USER \
+        --proxypassword $PROXY_PASS
+elif [[ -n $PROXY_URL && ! -n $PROXY_USER && ! -n $PROXY_PASS ]]; then 
+    echo "Connecting to ADO server: $AZP_URL
+agent pool: $AZP_POOL
+agent name: $AZP_AGENT_NAME
+proxy url: $PROXY_URL"
+    ./config.sh \
+        --unattended \
+        --url $AZP_URL \
+        --auth pat \
+        --token $AZP_TOKEN \
+        --pool $AZP_POOL \
+        --agent $AZP_AGENT_NAME \
+        --replace \
+        --acceptTeeEula \
+        --proxyurl $PROXY_URL
+elif [[ ! -n $PROXY_URL && ! -n $PROXY_USER && ! -n $PROXY_PASS ]]; then 
+    echo "Connecting to ADO server: $AZP_URL
+agent pool: $AZP_POOL
+agent name: $AZP_AGENT_NAME"
+    ./config.sh \
+        --unattended \
+        --url $AZP_URL \
+        --auth pat \
+        --token $AZP_TOKEN \
+        --pool $AZP_POOL \
+        --agent $AZP_AGENT_NAME \
+        --replace \
+        --acceptTeeEula
+fi
 
 #Run the agent as a service
 sudo ./svc.sh install
