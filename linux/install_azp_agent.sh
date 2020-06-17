@@ -2,7 +2,6 @@
 
 #NOTES: this script must be run by non-root user with passwordless sudo access
 
-# ado_url='https://dev.azure.com/chef-sa'
 ado_url='' #https://dev.azure.com/<your_org>
 ado_token='' #your PAT token
 azp_pool='default' #azure devops agent pool
