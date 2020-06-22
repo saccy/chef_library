@@ -25,7 +25,7 @@ chef-server-ctl restart opscode-erchef
 #Insert automate config into /etc/opscode/chef-server.rb
 echo "data_collector['root_url'] = '${automate_url}/data-collector/v0/'
 data_collector['proxy'] = true
-profiles['root_url'] = '${automate_url}'" >> /etc/opscode/chef-server.rb
+profiles['root_url'] = '${automate_url}'" > /etc/opscode/chef-server.rb
 
 #Apply changes
 chef-server-ctl reconfigure

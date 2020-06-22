@@ -61,7 +61,7 @@ chef-server-ctl \
         $user_pass \
         --filename $user_key
 
-echo 'Creating chef server organisation'
+# echo 'Creating chef server organisation'
 chef-server-ctl \
     org-create \
         ${org_machine_friendly} \

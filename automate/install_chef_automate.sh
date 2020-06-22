@@ -12,31 +12,26 @@ curl https://packages.chef.io/files/current/latest/chef-automate-cli/chef-automa
     gunzip - > chef-automate && chmod +x chef-automate
 
 #Initialise chef automate config file
-# sudo ./chef-automate init-config \
-./chef-automate init-config \
+sudo ./chef-automate init-config \
     --fqdn $fqdn #\
     #--certificate $cert \
     #--private-key $path_to_key
 
+#FIXME: script will always exit here regardless of success or not
 #Run preflight check
-#sudo ./chef-automate preflight-check \
-#    --config ./config.toml
-
-
-#Capture output of first deploy attempt
-# deploy_out="$(
-#     sudo ./chef-automate deploy config.toml \
-#         --accept-terms-and-mlsa 2>&1 | \
-#         tee /dev/tty
-# )"
+deploy_out="$(
+    sudo ./chef-automate preflight-check \
+        --config ./config.toml 2>&1 |
+        tee /dev/tty
+)"
 
 #Check output of first deploy attempt and apply fixes automatically
-# if echo "$deploy_out" | grep ^vm. > /dev/null 2>&1; then
-#     echo "Applying sysctl changes"
-#     fixes="$(echo "$deploy_out" | grep ^vm.)"
-#     for fix in "${fixes[*]}"; do
-#         sudo sh -c "echo \"${fix}\" >> /etc/sysctl.conf"
-#     done
-#     sudo sysctl -p
-#     sudo ./chef-automate deploy config.toml --accept-terms-and-mlsa
-# fi
+if echo "$deploy_out" | grep ^vm. > /dev/null 2>&1; then
+    echo "Applying sysctl changes"
+    fixes="$(echo "$deploy_out" | grep ^vm.)"
+    for fix in "${fixes[*]}"; do
+        sudo sh -c "echo \"${fix}\" >> /etc/sysctl.conf"
+    done
+    sudo sysctl -p
+    sudo ./chef-automate deploy config.toml --accept-terms-and-mlsa
+fi
