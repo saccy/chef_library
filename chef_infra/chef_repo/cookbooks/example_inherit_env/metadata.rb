@@ -1,0 +1,11 @@
+name 'example_inherit_env'
+description 'An example cookbook'
+maintainer 'Example maintainer'
+maintainer_email 'maintainer@example.com'
+license 'Apache-2.0'
+version '0.0.2'
+chef_version '>= 13.0'
+
+# depends 'audit'
+# depends 'chef-client'
+# depends 'chef_client_updater'

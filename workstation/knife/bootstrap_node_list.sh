@@ -19,6 +19,8 @@ for node in ${node_list[@]}; do
         --ssh-identity-file $node_ssh_key \
         --policy-name $policy_name \
         --policy-group $policy_group \
+        --max-wait 10 \ #Try for a max of 10 seconds to connect via SSH
+        --session-timeout 60 \
         --ssh-verify-host-key=never \
         --chef-license=accept \
         -y \
