@@ -7,6 +7,12 @@
 ##    https://github.com/mwrock/chef_workstation
 ##    https://github.com/Nordstrom/chefdk_bootstrap
 
+.chef
+.chef/*.pem
+.chef/encrypted_data_bag_secret
+policyfiles/*lock.json
+**/.kitchen
+**/example*
 
 ## Ignore Chef related files and secrets
 .chef

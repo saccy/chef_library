@@ -7,11 +7,12 @@
 
 set -e
 
-node='172.17.0.3' #DNS resolvable name of the node to target
-node_user='root' #The user on the node to authenticate as over SSH
+# node='ec2-54-66-9-174.ap-southeast-2.compute.amazonaws.com' #DNS resolvable name of the node to target
+node='ubuntu_14_docker' #DNS resolvable name of the node to target
+node_user='r' #The user on the node to authenticate as over SSH
 node_ssh_key='/node_key' #Path to SSH key used to authenticate with node
 node_password=''
-node_name='local_docker_node' #The name your node will use when registering with CHEF server
+node_name='ec2-54-66-9-174.ap-southeast-2.compute.amazonaws.com' #The name your node will use when registering with CHEF server
 policy_name='example_policy'
 policy_group='example_policy_group'
 
@@ -23,7 +24,8 @@ knife bootstrap $node \
     --ssh-identity-file $node_ssh_key \
     --ssh-verify-host-key=never \
     --node-ssl-verify-mode none \
-    --chef-license=accept #\
-    # --sudo
+    --chef-license=accept \
+    --sudo \
+    -y 
     # --connection-password $node_password \
     # --connection-port
