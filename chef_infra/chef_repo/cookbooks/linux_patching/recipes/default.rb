@@ -42,12 +42,10 @@ if tagged?('do_patch')
   # Check if pre patch reboot is required
   unless tagged?('pre_patch_rebooted')
     tag('pre_patch_rebooted')
-
     execute 'Check if pre_patch reboot is required' do
       command "echo 'pre patch reboot underway'"
       notifies :reboot_now, 'reboot[now]', :immediately
     end
-
     return
   end
 
@@ -56,11 +54,18 @@ if tagged?('do_patch')
     untag('do_patch')
     tag("patched_#{current_date}")
 
-    # Run the patching script
-    execute 'Patch server' do
-      command patch_script
-      notifies :request_reboot, 'reboot[now]', :delayed
+    var_partition_available_size = `df -h /var | sed -n '2p' | awk '{print $4}' | cut -d"G" -f1`
+
+    if var_partition_available_size.to_i > node['linux_patching']['var_partition_min_diskspace_required_in_GB']
+      # Run the patching script
+      execute 'Patch server' do
+        command patch_script
+        notifies :request_reboot, 'reboot[now]', :delayed
+      end
+    else
+      raise 'Can not patch node due to insufficient disk space'
     end
+
   end
 
 end
