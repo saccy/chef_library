@@ -6,14 +6,7 @@
 
 if tagged?('do_patch')
 
-  ruby_block 'get current date' do
-    block do
-      node.default['linux_patching']['date'] = Time.new.strftime('%Y-%m-%d')
-    end
-  end
-
-  current_date = node['linux_patching']['date']
-  log_dir = "/var/log/patching/#{current_date}"
+  log_dir = "/var/log/patching/#{Time.new.strftime("%Y-%m-%d")}"
   patch_script = '/patch_linux.sh'
 
   directory log_dir do
@@ -52,7 +45,7 @@ if tagged?('do_patch')
   if tagged?('pre_patch_rebooted')
     untag('pre_patch_rebooted')
     untag('do_patch')
-    tag("patched_#{current_date}")
+    tag("patched_#{Time.new.strftime("%Y-%m-%d")}")
 
     var_partition_available_size = `df -h /var | sed -n '2p' | awk '{print $4}' | cut -d"G" -f1`
 

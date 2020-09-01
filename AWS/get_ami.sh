@@ -1,5 +1,7 @@
 #!/bin/sh
 
+#TODO: provide choice for oldest or newest
+
 usage() {
     echo "usage: ${0} -d [centos||ubuntu]"
     echo "  -d <distro> centos or ubuntu"
@@ -61,3 +63,6 @@ if [[ ! -n $distro ]]; then
     echo "Missing a required parameter"
     usage
 fi
+
+
+#aws ec2 describe-images --owners self amazon --filters "Name=name,Values=*2012*" --query 'reverse(sort_by(Images, &CreationDate))[].[Name, ImageId, CreationDate, Description]
