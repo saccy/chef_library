@@ -10,7 +10,7 @@
 .chef
 .chef/*.pem
 .chef/encrypted_data_bag_secret
-policyfiles/*lock.json
+**/.lock.json
 **/.kitchen
 **/example*
 
