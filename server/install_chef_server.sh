@@ -22,35 +22,35 @@ pkg_prefix='https://packages.chef.io/files/stable/chef-server'
 # server_vers=$(curl -sL https://downloads.chef.io | grep 'Chef Infra Server' | grep -oe 'Version [0-9]\+.[0-9]\+.[0-9]\+' | cut -d' ' -f2) #Get latest chef server version
 server_vers='14.0.65'
 
-#Only centos and ubuntu supported by this script
-case $os in
-    'centos')
-        # https://downloads.chef.io/chef-server/${server_vers}#el  << use this to get the '${server_vers}-x' suffix
-        pkg_suffix="${server_vers}/el/${os_v}/chef-server-core-${server_vers}-1.el7.x86_64.rpm"
-        pkg_url=${pkg_prefix}/${pkg_suffix}
-        pkg=${pkg_url##*/}
-        curl $pkg_url -o /tmp/${pkg}
-        yum localinstall -y /tmp/${pkg}
-        ;;
-    'ubuntu')
-        # "https://downloads.chef.io/chef-server/${server_vers}#ubuntu" << use this to get the '${server_vers}-x' suffix
-        pkg_suffix="${server_vers}/ubuntu/${os_v}/chef-server-core_${server_vers}-1_amd64.deb"
-        pkg_url=${pkg_prefix}/${pkg_suffix}
-        pkg=${pkg_url##*/}
-        curl $pkg_url -o /tmp/${pkg}
-        dpkg -i /tmp/${pkg}
-        ;;
-    *)
-        echo "OS not supported in this environment: $os"
-        exit 1
-        ;;
-esac
+# #Only centos and ubuntu supported by this script
+# case $os in
+#     'centos')
+#         # https://downloads.chef.io/chef-server/${server_vers}#el  << use this to get the '${server_vers}-x' suffix
+#         pkg_suffix="${server_vers}/el/${os_v}/chef-server-core-${server_vers}-1.el7.x86_64.rpm"
+#         pkg_url=${pkg_prefix}/${pkg_suffix}
+#         pkg=${pkg_url##*/}
+#         curl $pkg_url -o /tmp/${pkg}
+#         yum localinstall -y /tmp/${pkg}
+#         ;;
+#     'ubuntu')
+#         # "https://downloads.chef.io/chef-server/${server_vers}#ubuntu" << use this to get the '${server_vers}-x' suffix
+#         pkg_suffix="${server_vers}/ubuntu/${os_v}/chef-server-core_${server_vers}-1_amd64.deb"
+#         pkg_url=${pkg_prefix}/${pkg_suffix}
+#         pkg=${pkg_url##*/}
+#         curl $pkg_url -o /tmp/${pkg}
+#         dpkg -i /tmp/${pkg}
+#         ;;
+#     *)
+#         echo "OS not supported in this environment: $os"
+#         exit 1
+#         ;;
+# esac
 
-#Configure chef server
-echo 'Accepting chef license'
-chef-server-ctl \
-    reconfigure \c
-        --chef-license=accept
+# #Configure chef server
+# echo 'Accepting chef license'
+# chef-server-ctl \
+#     reconfigure \
+#         --chef-license=accept
 
 echo 'Creating chef server admin user'
 chef-server-ctl \
