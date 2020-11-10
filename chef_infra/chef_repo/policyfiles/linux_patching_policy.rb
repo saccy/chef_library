@@ -5,7 +5,7 @@ name 'linux_patching_policy'
 default_source :supermarket
 
 # run_list: chef-client will run these recipes in the order specified.
-run_list 'recipe[linux_respository::default]', 'recipe[linux_patching::default]'
+run_list 'recipe[linux_repository::default]', 'recipe[linux_patching::default]'
 
 # Specify a custom source for a single cookbook:
 cookbook 'linux_repository', path: '../cookbooks/linux_repository/'
