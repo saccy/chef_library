@@ -1,0 +1,27 @@
+#!/bin/bash
+
+smt_host='<%= @smt_host %>'
+
+zypper_out=$(zypper ls)
+
+zyp_svcs=(
+    'cloud_update'
+    'index.html'
+)
+
+for zyp_svc in ${zyp_svcs[@]}; do
+    if echo "$zypper_out" | grep $zyp_svc > /dev/null 2>&1; then
+        zyp_svc_int=$(echo "$zypper_out" | grep $zyp_svc | awk '{print $1}')
+        zypper rs $zyp_svc_int
+        rm -f /usr/lib/zypp/plugins/services/${zyp_svc}
+    fi
+done
+
+SUSEConnect --de-register
+SUSEConnect --cleanup
+rm -f /etc/SUSEConnect
+rm -rf /etc/zypp/credentials.d/*
+#rm -rf /etc/zypp/repos.d/*
+rm -f /etc/zypp/services.d/*
+# ./clientSetup4SMT.sh --host $smt_host
+SUSEConnect --write-config --url http://${smt_host}

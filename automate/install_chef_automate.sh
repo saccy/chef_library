@@ -6,7 +6,7 @@ set -e
 #TODO: cmd line args.
 #      flag to force automatic rectify of preflight check errors and install
 
-fqdn="$1"
+fqdn="$(curl -s http://169.254.169.254/latest/meta-data/public-hostname)"
 
 curl https://packages.chef.io/files/current/latest/chef-automate-cli/chef-automate_linux_amd64.zip | \
     gunzip - > chef-automate && chmod +x chef-automate
@@ -17,7 +17,6 @@ sudo ./chef-automate init-config \
     #--certificate $cert \
     #--private-key $path_to_key
 
-#FIXME: script will always exit here regardless of success or not
 #Run preflight check
 deploy_out="$(
     sudo ./chef-automate preflight-check \

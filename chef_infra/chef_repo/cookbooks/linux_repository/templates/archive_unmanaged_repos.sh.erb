@@ -1,0 +1,17 @@
+#!/bin/bash
+
+os_fam='<%= @os_fam %>'
+if [[ $os_fam != 'suse' ]]; then
+    archive_files=($(find <%= @repo_dir %> -maxdepth 1 -type f -not -name "wipro_*"))
+else
+    archive_files=($(find <%= @repo_dir %> -maxdepth 1 -type f))
+fi
+
+if [ ${#archive_files[@]} > 0 ]; then
+    for file in ${archive_files[@]}; do
+        mv $file <%= @archive_dir %>
+    done
+    exit 0
+else
+    exit 1
+fi
