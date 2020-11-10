@@ -1,5 +1,5 @@
 # A name that describes what the system you're building with Chef does.
-name 'linux_patching_policy'
+name 'linux_repository_policy'
 
 # Where to find external cookbooks:
 default_source :supermarket

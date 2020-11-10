@@ -20,7 +20,7 @@ elsif tagged('do_patch_all_reboot')
 end
 
 if tagged?('do_patch')
-  log_dir = "/var/log/patching/#{Time.new.strftime("%Y-%m-%d")}"
+  log_dir = "/var/log/patching/#{Time.new.strftime('%Y-%m-%d')}"
   patch_script = '/patch_linux.sh'
 
   directory log_dir do
@@ -53,13 +53,13 @@ if tagged?('do_patch')
       command "echo 'pre patch reboot underway'"
       notifies :reboot_now, 'reboot[now]', :immediately
     end
-    
+
     # Stop processing client run here if pre_reboot is required.
     return
   end
 
   untag('do_patch')
-  tag("patched_#{Time.new.strftime("%Y-%m-%d")}")
+  tag("patched_#{Time.new.strftime('%Y-%m-%d')}")
 
   var_partition_available_size = `df -h /var | sed -n '2p' | awk '{print $4}' | cut -d"G" -f1`
 
