@@ -5,14 +5,11 @@
 # looping over multiple items at a time: https://stackoverflow.com/questions/25814250/loop-with-more-than-one-item-at-a-time
 # async commands: https://superuser.com/questions/318390/bash-run-commands-asynchronously-at-a-delay
 
+set -e
+
 source ./do_patch_node_list
 
 tag='do_patch'
-
-# if [[ ! -n $CHEF_SERVER ]]; then
-#     echo "[ERROR] Missing a required parameter: chef server"
-#     exit 1
-# fi
 
 if [ ${#node_list[@]} == 0 ]; then
     echo '[ERROR] Empty list detected'

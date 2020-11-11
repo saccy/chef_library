@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 name 'linux_patching'
 description 'Patches linux servers'
 maintainer 'andrew hudson'

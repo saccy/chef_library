@@ -1,0 +1,10 @@
+{
+    "nodes": [
+        {
+            "dns": "ec2-54-252-29-248.ap-southeast-2.compute.amazonaws.com",
+            "name": "my_node",
+            "policy_group": "linux_patch_group",
+            "policy_name": "linux_repository_policy"
+        }
+    ]
+}

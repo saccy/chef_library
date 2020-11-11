@@ -1,18 +1,13 @@
-#
-# Cookbook:: linux_patching
-# Recipe:: default
-#
-# Copyright:: 2020, The Authors, All Rights Reserved.
 
-if tagged('do_patch_pre_reboot')
+if tagged?('do_patch_pre_reboot')
   untag('do_patch_pre_reboot')
   tag('pre_reboot')
   tag('do_patch')
-elsif tagged('do_patch_post_reboot')
+elsif tagged?('do_patch_post_reboot')
   untag('do_patch_post_reboot')
   tag('post_reboot')
   tag('do_patch')
-elsif tagged('do_patch_all_reboot')
+elsif tagged?('do_patch_all_reboot')
   untag('do_patch_all_reboot')
   tag('pre_reboot')
   tag('post_reboot')
@@ -61,7 +56,7 @@ if tagged?('do_patch')
   untag('do_patch')
   tag("patched_#{Time.new.strftime('%Y-%m-%d')}")
 
-  var_partition_available_size = `df -h /var | sed -n '2p' | awk '{print $4}' | cut -d"G" -f1`
+  var_partition_available_size = shell_out("df -h /var | sed -n '2p' | awk '{print $4}' | cut -d'G' -f1").stdout
 
   if var_partition_available_size.to_i > node['linux_patching']['var_partition_min_diskspace_required_in_GB']
     # Run the patching script
