@@ -6,7 +6,7 @@ Use this code to bootstrap nodes with the chef infra client. You can specify SSH
 1. Identify the private SSH key or password file you will be using to authenticate with your nodes. Password file must contain *only* the plain text password.
 1. Identify the user you will be using to authenticate with your nodes.
 1. You will need `jq` installed.
-1. You will need to have `knife` configured. https://docs.chef.io/workstation/knife_setup/.
+1. You will need to have [knife configured](./configure_knife.sh). https://docs.chef.io/workstation/knife_setup/.
 1. You can use the [chef workstation container](../workstation/docker/Dockerfile) defined in this repo to make life easier.
 
 # To use the bootstrap_nodes.sh script
