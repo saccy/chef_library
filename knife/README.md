@@ -2,7 +2,7 @@
 Use this code to bootstrap nodes with the chef infra client. You can specify SSH or password authentication, though SSH is highly recommended when bootstrapping.
 
 # Requirements
-1. Populate a JSON file with the information required to bootstrap your node(s). Follow the `./node_list_example.json` file as an example of the required information.
+1. Populate a JSON file with the information required to bootstrap your node(s). Follow the [node_list_example.json](./node_list_example.json) file as an example of the required information.
 1. Identify the private SSH key or password file you will be using to authenticate with your nodes. Password file must contain *only* the plain text password.
 1. Identify the user you will be using to authenticate with your nodes.
 1. You will need `jq` installed.
