@@ -1,17 +1,18 @@
 #!/bin/bash
 
 # TODO:
+#   error checking on JSON fields
 #   windows
 #   test password option - print warning that password isn't recommended
 #   handle optional policy groups/policies
 #   async bootstrapping
 
 usage() {
-    echo "usage: ${0} -c [ssh||pw]"
+    echo "usage: ${0} -c [ssh||pw] -u <user> -f </path/to/creds/file> -n </path/to/nodes.json>"
     echo "  -c <connection> SSH or user:password"
     echo "  -u <user> The user to authenticate as"
     echo "  -f <credentials file> Path to SSH file or a file containing password"
-    echo "  -n <nodes file> Path to JSON file containing node information"
+    echo "  -n <nodes JSON file> Path to JSON file containing node information"
     echo "  -h <help> Display this message"
     echo "example: ${0} -c ssh -u john -f ~/.ssh/private_key -n /nodes.json"
     echo "example: ${0} -c pw -u mary -f ~/.creds/password -n /nodes.json"
