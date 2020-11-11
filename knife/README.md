@@ -11,7 +11,7 @@ Use this code to bootstrap nodes with the chef infra client. You can specify SSH
 
 # To use the bootstrap_nodes.sh script
  - `./bootstrap_nodes.sh -h` will print a help message.
- - See `./node_list_example.json` for an example of how to format the node JSON file.
+ - See [node_list_example.json](./node_list_example.json) for an example of how to format the node JSON file.
  - Currently, policy group and policy are required fields within the node JSON file.
 
 ```
