@@ -1,4 +1,3 @@
-
 if tagged?('do_patch_pre_reboot')
   untag('do_patch_pre_reboot')
   tag('pre_reboot')

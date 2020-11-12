@@ -2,7 +2,7 @@
 
 os_fam='<%= @os_fam %>'
 if [[ $os_fam != 'suse' ]]; then
-    archive_files=($(find <%= @repo_dir %> -maxdepth 1 -type f -not -name "wipro_*"))
+    archive_files=($(find <%= @repo_dir %> -maxdepth 1 -type f -not -name "chef-*"))
 else
     archive_files=($(find <%= @repo_dir %> -maxdepth 1 -type f))
 fi
