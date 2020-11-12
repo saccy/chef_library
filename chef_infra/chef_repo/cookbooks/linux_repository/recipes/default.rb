@@ -96,77 +96,52 @@ when 'rhel'
       make_cache false
     end
   end
-#   search(:"#{node['platform']}_repolist", '*:*').each do |repo_data|
-#     if node['platform_version'].to_i >= 6 && repo_data['platform_version'] == '6' && node['platform_version'].to_i < 7
-#       yum_repository repo_data['id'] do
-#         description repo_data['description']
-#         baseurl repo_data['baseurl']
-#         enabled repo_data['enabled']
-#         gpgcheck repo_data['gpgcheck']
-#         repositoryid repo_data['repositoryid']
-#         action :create
-#         make_cache false
-#       end
-#     elsif node['platform_version'].to_i >= 7 && repo_data['platform_version'] == '7'
-#       yum_repository repo_data['id'] do
-#         description repo_data['description']
-#         baseurl repo_data['baseurl']
-#         enabled repo_data['enabled']
-#         gpgcheck repo_data['gpgcheck']
-#         repositoryid repo_data['repositoryid']
-#         action :create
-#         make_cache false
-#       end
-#     end
-#   end
 
 # when 'suse'
 #   if node['platform_version'].to_i == 11
-#     node.default['zypper']['smt_host'] = 'chef-repo-SLESSAP12.wipro.com'
+#     node.default['zypper']['smt_host'] = TODO
 #     include_recipe 'zypper::smt_client'
 #   end
 
-#   if tagged?('GCP_TEST')
-#     if node['platform_version'].to_i == 12
+#   if node['platform_version'].to_i == 12
 
-#       directory '/etc/zypp/repos.d/archive' do
-#         owner  'root'
-#         mode   '0755'
-#         action :create
-#       end
+#     directory '/etc/zypp/repos.d/archive' do
+#       owner  'root'
+#       mode   '0755'
+#       action :create
+#     end
 
-#       template '/etc/zypp/archive_unmanaged_repos.sh' do
-#         source 'archive_unmanaged_repos.sh.erb'
-#         mode   '0755'
-#         variables(
-#           repo_dir: '/etc/zypp/repos.d',
-#           archive_dir: '/etc/zypp/repos.d/archive',
-#           os_fam: node['platform_family']
-#         )
-#       end
+#     template '/etc/zypp/archive_unmanaged_repos.sh' do
+#       source 'archive_unmanaged_repos.sh.erb'
+#       mode   '0755'
+#       variables(
+#         repo_dir: '/etc/zypp/repos.d',
+#         archive_dir: '/etc/zypp/repos.d/archive',
+#         os_fam: node['platform_family']
+#       )
+#     end
 
-#       template '/etc/zypp/reregister_smt.sh' do
-#         source 'reregister_smt.sh.erb'
-#         mode   '0755'
-#         variables(
-#           smt_host: 'chef-repo-SLESSAP12.wipro.com'
-#         )
-#         notifies :run, 'execute[archive existing repos]', :immediately
-#         notifies :run, 'execute[re-register smt server]', :delayed
-#       end
+#     template '/etc/zypp/reregister_smt.sh' do
+#       source 'reregister_smt.sh.erb'
+#       mode   '0755'
+#       variables(
+#         smt_host: TODO
+#       )
+#       notifies :run, 'execute[archive existing repos]', :immediately
+#       notifies :run, 'execute[re-register smt server]', :delayed
+#     end
 
-#       execute 'archive existing repos' do
-#         command '/etc/zypp/archive_unmanaged_repos.sh'
-#         action :nothing
-#       end
+#     execute 'archive existing repos' do
+#       command '/etc/zypp/archive_unmanaged_repos.sh'
+#       action :nothing
+#     end
 
-#       execute 're-register smt server' do
-#         command '/etc/zypp/reregister_smt.sh'
-#         action :nothing
-#       end
-
+#     execute 're-register smt server' do
+#       command '/etc/zypp/reregister_smt.sh'
+#       action :nothing
 #     end
 
 #   end
-
+  else
+    raise "Unsupported OS family: #{node['platform_family']}"
 end
