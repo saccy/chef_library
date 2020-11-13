@@ -1,5 +1,5 @@
 # Linux patching
-Tag based approach to patching with chef infra. The [linux_patch.sh](./templates/patch_linux.sh) script runs the patching commands and is deployed and executed via the [default](./recipes/default) recipe.
+Tag based approach to patching with chef infra. The [linux_patch.sh](./templates/patch_linux.sh.erb) script runs the patching commands and is deployed and executed via the [default](./recipes/default.rb) recipe.
 
 # Valid tags
  - `do_patch`: Patch a node. *Do not* reboot.
