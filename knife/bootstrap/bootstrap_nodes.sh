@@ -8,13 +8,14 @@
 #   async bootstrapping
 
 usage() {
-    echo "usage: ${0} -c [ssh||pw] -f </path/to/creds/file> -n </path/to/nodes.json>"
+    echo "usage: ${0} -c [ssh||pw] -u <user> -f </path/to/creds/file> -n </path/to/nodes.json>"
     echo "  -c <connection> SSH or user:password"
+    echo "  -u <user> The user to authenticate as"
     echo "  -f <credentials file> Path to SSH file or a file containing password"
     echo "  -n <nodes JSON file> Path to JSON file containing node information"
     echo "  -h <help> Display this message"
-    echo "example: ${0} -c ssh -f ~/.ssh/private_key -n /nodes.json"
-    echo "example: ${0} -c pw -f ~/.creds/password -n /nodes.json"
+    echo "example: ${0} -c ssh -u john -f ~/.ssh/private_key -n /nodes.json"
+    echo "example: ${0} -c pw -u mary -f ~/.creds/password -n /nodes.json"
     exit 1
 }
 
@@ -44,13 +45,13 @@ pre_flight_checks() {
         usage
     fi
 
-    if [[ ! -n $conn_type || ! -n $creds_file ]]; then
+    if [[ ! -n $conn_type || ! -n $user || ! -n $creds_file ]]; then
         echo "[ERROR] Missing a required parameter"
         usage
     fi
 }
 
-while getopts "c:f:n:h" opt; do
+while getopts "c:u:f:n:h" opt; do
     case $opt in
         'c')
             if [[ $OPTARG == 'ssh' || $OPTARG == 'pw' ]]; then
@@ -60,6 +61,9 @@ while getopts "c:f:n:h" opt; do
                 echo "Valid choices are ssh, pw"
                 usage
             fi
+            ;;
+        'u')
+            user=${OPTARG}
             ;;
         'f')
             if [ -f $OPTARG ]; then
@@ -102,7 +106,6 @@ case $conn_type in
             node_dns=$(jq -r ".nodes[${i}].dns" $node_list)
             node_name=$(jq -r ".nodes[${i}].name" $node_list)
             node_port=$(jq -r ".nodes[${i}].port" $node_list)
-            node_user=$(jq -r ".nodes[${i}].user" $node_list)
             policy_name=$(jq -r ".nodes[${i}].policy_name" $node_list)
             policy_group=$(jq -r ".nodes[${i}].policy_group" $node_list)
             
@@ -120,7 +123,7 @@ case $conn_type in
 
             knife bootstrap $node_dns \
                 --node-name $node_name \
-                --connection-user $node_user \
+                --connection-user $user \
                 --ssh-identity-file $creds_file \
                 --policy-name $policy_name \
                 --policy-group $policy_group \
@@ -137,7 +140,6 @@ case $conn_type in
             node_dns=$(jq -r ".nodes[${i}].dns" $node_list)
             node_name=$(jq -r ".nodes[${i}].name" $node_list)
             node_port=$(jq -r ".nodes[${i}].port" $node_list)
-            node_user=$(jq -r ".nodes[${i}].user" $node_list)
             policy_name=$(jq -r ".nodes[${i}].policy_name" $node_list)
             policy_group=$(jq -r ".nodes[${i}].policy_group" $node_list)
 
@@ -147,7 +149,7 @@ case $conn_type in
 
             knife bootstrap $node_dns \
                 --node-name $node_name \
-                --connection-user $node_user \
+                --connection-user $user \
                 --connection-password $(cat creds_file) \
                 --policy-name $policy_name \
                 --policy-group $policy_group \

@@ -1,0 +1,17 @@
+{
+    "nodes": [
+        {
+            "dns": "example_node0",
+            "name": "my_node0",
+            "policy_group": "linux_patch_group",
+            "policy_name": "linux_repository_policy"
+        },
+        {
+            "dns": "example_node1",
+            "name": "my_node1",
+            "policy_group": "linux_patch_group",
+            "policy_name": "linux_repository_policy",
+            "port": "2222"
+        }
+    ]
+}

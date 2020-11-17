@@ -1,0 +1,14 @@
+---
+trigger: 
+  branches:
+    exclude:
+    - '*'
+
+pool:
+  name: 'AZD-CHEF-IMG'
+  demands:
+  - Agent.Name -equals $(System.DefinitionName)
+
+steps:
+- script: ./tag_nodes.sh
+  displayName: 'Tagging nodes'
