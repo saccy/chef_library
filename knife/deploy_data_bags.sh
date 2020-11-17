@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# TODO: need to check if item has changed
-
-# print bag, item, check if file changed, check if git has native md5 hashing
+# TODO: 
+#   need to check if item has changed
+#   print bag, item, check if file changed, check if git has native md5 hashing
 
 error_handler() {
     local exit_code="$1"
