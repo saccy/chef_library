@@ -15,14 +15,13 @@ Use this code to bootstrap nodes with the chef infra client. You can specify SSH
  - Currently, policy group and policy are required fields within the node JSON file.
 
 ```
-usage: ./bootstrap_nodes.sh -c [ssh||pw] -u <user> -f </path/to/creds/file> -n </path/to/nodes.json>
-  -c <connection> SSH or user:password
-  -u <user> The user to authenticate as
+usage: ./bootstrap_nodes.sh -c [ssh||pw] -f </path/to/creds/file> -n </path/to/nodes.json>
+  -c <connection> 'ssh' or 'pw'
   -f <credentials file> Path to SSH file or a file containing password
   -n <nodes JSON file> Path to JSON file containing node information
   -h <help> Display this message
-example: ./bootstrap_nodes.sh -c ssh -u john -f ~/.ssh/private_key -n /nodes.json
-example: ./bootstrap_nodes.sh -c pw -u mary -f ~/.creds/password -n /nodes.json
+example: ./bootstrap_nodes.sh -c ssh -f ~/.ssh/private_key -n /nodes.json
+example: ./bootstrap_nodes.sh -c pw -f ~/.creds/password -n /nodes.json
 ```
 
 # Limitations
