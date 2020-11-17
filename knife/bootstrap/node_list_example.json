@@ -1,17 +1,18 @@
 {
     "nodes": [
         {
-            "dns": "example_node0",
-            "name": "my_node0",
-            "policy_group": "linux_patch_group",
-            "policy_name": "linux_repository_policy"
+            "dns": "circle-rhel7-node.contoso.com",
+            "name": "circle-rhel7-node",
+            "policy_group": "circle",
+            "policy_name": "base",
+            "user": "ec2-user"
         },
         {
-            "dns": "example_node1",
-            "name": "my_node1",
-            "policy_group": "linux_patch_group",
-            "policy_name": "linux_repository_policy",
-            "port": "2222"
+            "dns": "circle-ubuntu1804-node.contoso.com",
+            "name": "circle-ubuntu1804-node",
+            "policy_group": "circle",
+            "policy_name": "base",
+            "user": "ubuntu"
         }
     ]
 }
