@@ -5,9 +5,9 @@ trigger:
     - '*'
 
 pool:
-  name: 'AZD-CHEF-IMG'
+  name: 'your_agent_pool'
   demands:
-  - Agent.Name -equals $(System.DefinitionName)
+  - Agent.Name -equals your_agent
 
 steps:
 - script: ./tag_nodes.sh
