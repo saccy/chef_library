@@ -35,3 +35,4 @@ example: ./bootstrap_nodes.sh -c pw -u mary -f ~/.creds/password -n /nodes.json
  - Windows support
  - Async bootstrapping
  - Optional policy/policy group
+ - Move CLI options into JSON
